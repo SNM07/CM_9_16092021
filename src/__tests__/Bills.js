@@ -1,11 +1,22 @@
 import { screen } from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
+import { localStorageMock } from "../__mocks__/localStorage.js"
+
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", () => {
-      const html = BillsUI({ data: []})
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+      window.localStorage.setItem(
+        "user",
+        JSON.stringify({
+          type: "Employee",
+        })
+      ); 
+      const html = BillsUI({ data: [] })
       document.body.innerHTML = html
       //to-do write expect expression
       const billIcon = screen.getByTestId("icon-window");
