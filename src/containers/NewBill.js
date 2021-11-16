@@ -18,7 +18,13 @@ export default class NewBill {
   handleChangeFile = e => {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
+    const fileName = filePath[filePath.length - 1]
+    const extension = file.name.split('.').pop()
+    //const fileFormat = fileFormatting[fileFormatting.length - 1]
+    const extensionCheck = /(png|jpg|jpeg)/g
+    //if (fileFormat === "jpeg" || fileFormat === "png" || fileFormat === "jpg") {
+    if (extension.toLowerCase().match(extensionCheck)) {
+          /* istanbul ignore next */
     this.firestore
       .storage
       .ref(`justificatifs/${fileName}`)
@@ -28,6 +34,10 @@ export default class NewBill {
         this.fileUrl = url
         this.fileName = fileName
       })
+    } else {
+      window.alert("Les extensions acceptées pour le justificatif sont jpeg, jpg ou png")
+      this.document.querySelector(`input[data-testid="file"]`).value = ''
+    }
   }
   handleSubmit = e => {
     e.preventDefault()
@@ -51,6 +61,7 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
+    /* istanbul ignore next */
   createBill = (bill) => {
     if (this.firestore) {
       this.firestore
