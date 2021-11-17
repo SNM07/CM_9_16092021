@@ -20,9 +20,8 @@ export default class NewBill {
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length - 1]
     const extension = file.name.split('.').pop()
-    //const fileFormat = fileFormatting[fileFormatting.length - 1]
     const extensionCheck = /(png|jpg|jpeg)/g
-    //if (fileFormat === "jpeg" || fileFormat === "png" || fileFormat === "jpg") {
+    
     if (extension.toLowerCase().match(extensionCheck)) {
           /* istanbul ignore next */
     this.firestore
