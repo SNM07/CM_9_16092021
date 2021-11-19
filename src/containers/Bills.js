@@ -12,7 +12,13 @@ export default class {
     const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`)
     if (iconEye) iconEye.forEach(icon => {
       icon.addEventListener('click', (e) => this.handleClickIconEye(icon))
+      ///
+      const billUrl = icon.dataset.billUrl
+      const extensionCheck = /((\.png)$|(\.jpg)$|(\.jpeg)$|(\.png\?)|(\.jpg\?)|(\.jpeg\?))/g
+      if (billUrl !== "" && !billUrl.toString().toLowerCase().match(extensionCheck)) icon.style.display = "none"
+      ///
     })
+   
     new Logout({ document, localStorage, onNavigate })
   }
 
@@ -64,3 +70,4 @@ export default class {
     }
   }
 }
+

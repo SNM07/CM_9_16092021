@@ -66,6 +66,43 @@ describe("When I am on Bills and there is no bill", () => {
   })
 })
 
+   //Check for eye icon when extension is not jpeg/jpg/png
+describe("When I am on Bills and the file is not a jpeg/jpg/png", () => {
+  test("Then the eye icon should not display", () => {
+    const html = BillsUI({
+      data: [{
+        "fileUrl": "https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
+      }]
+    })
+    document.body.innerHTML = html
+    const eye = screen.queryByTestId("icon-eye")
+    const billUrl = eye.dataset.billUrl
+    const extensionCheck = /((\.png)$|(\.jpg)$|(\.jpeg)$|(\.png\?)|(\.jpg\?)|(\.jpeg\?))/g
+    expect(billUrl).toMatch(extensionCheck)
+    expect(eye.display).toBe(undefined);
+  })
+})
+  
+//Check for eye icon when extension is not jpeg/jpg/png
+describe("When I am on Bills and the file is not a jpeg/jpg/png", () => {
+  test("Then the eye icon should not display", async () => {
+    const html = BillsUI({
+      data: [{
+        "fileUrl": "https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.pdf?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
+      }]
+    })
+    document.body.innerHTML = html
+    console.log(html)
+    const eye = screen.queryByTestId("icon-eye")
+    const billUrl = eye.dataset.billUrl
+    const wait = await screen.queryByTestId("icon-eye")
+    const extensionCheck = /((\.png)$|(\.jpg)$|(\.jpeg)$|(\.png\?)|(\.jpg\?)|(\.jpeg\?))/g
+    expect(wait).toBeTruthy()
+    expect(billUrl).not.toMatch(extensionCheck)
+    expect(eye.display).toBe("none");
+  })
+})
+  
 //Check the new bill modal
 describe('When I click the new bill button', ()=> {
   test('Then new bill modal should open', ()=> {
