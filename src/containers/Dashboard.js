@@ -6,6 +6,7 @@ import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
 
 export const filteredBills = (data, status) => {
+  /* istanbul ignore next */
   return (data && data.length) ?
     data.filter(bill => {
 

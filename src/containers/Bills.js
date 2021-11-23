@@ -1,5 +1,5 @@
 import { ROUTES_PATH } from '../constants/routes.js'
-import { formatDate, formatStatus } from "../app/format.js"
+import { formatDate, formatStatus, formatAmount } from "../app/format.js"
 import Logout from "./Logout.js"
 
 export default class {
@@ -12,11 +12,6 @@ export default class {
     const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`)
     if (iconEye) iconEye.forEach(icon => {
       icon.addEventListener('click', (e) => this.handleClickIconEye(icon))
-      ///
-      const billUrl = icon.dataset.billUrl
-      const extensionCheck = /((\.png)$|(\.jpg)$|(\.jpeg)$|(\.png\?)|(\.jpg\?)|(\.jpeg\?))/g
-      if (billUrl !== "" && !billUrl.toString().toLowerCase().match(extensionCheck)) icon.style.display = "none"
-      ///
     })
    
     new Logout({ document, localStorage, onNavigate })
@@ -48,22 +43,23 @@ export default class {
             try {
               return {
                 ...doc.data(),
+                dateInitial : doc.data().date,
                 date: formatDate(doc.data().date),
-                status: formatStatus(doc.data().status)
+                status: formatStatus(doc.data().status),
+                amount: formatAmount(doc.data().amount)
               }
             } catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
-              console.log(e,'for',doc.data())
               return {
                 ...doc.data(),
                 date: doc.data().date,
-                status: formatStatus(doc.data().status)
+                status: formatStatus(doc.data().status),
+                amount: formatAmount(doc.data().amount)
               }
             }
           })
           .filter(bill => bill.email === userEmail)
-          console.log('length', bills.length)
         return bills
       })
       .catch(error => error)

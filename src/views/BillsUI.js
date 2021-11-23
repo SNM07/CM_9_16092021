@@ -20,15 +20,12 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
-}
+    console.log(data)
+    return (data && data.length) ? data.sort((a,b)=>{return new Date(b.dateInitial) - new Date(a.dateInitial)}).map(bill => row(bill)).join("") : "" 
+  }
+
 
 export default ({ data: bills, loading, error }) => {
-  
-  if (bills !== undefined) {
-    const antiChrono = (a, b) => ((a.date < b.date) ? 1 : -1)
-    bills = [...bills].sort(antiChrono)
-  }
   
   const modal = () => (`
     <div class="modal fade" id="modaleFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

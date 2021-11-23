@@ -12,6 +12,8 @@ import { ROUTES } from "../constants/routes"
 const onNavigate = (pathname) => {
   document.body.innerHTML = ROUTES({ pathname });
 }
+
+window.alert = jest.fn();
 // Define user - LocalStorage - Employee
 beforeEach(() => {
   Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -55,7 +57,8 @@ describe("Given I am connected as an employee", () => {
     describe("And I upload a non-image file without correct extension", () => {
       //Display error alert window
       test("Then the error message should be display", async () => {
-        global.alert = jest.fn();
+        //global.alert = jest.fn();
+        window.alert.mockClear();
         document.body.innerHTML = NewBillUI()
         const newBill = new NewBill({ document, onNavigate, firestore: firestore, localStorage: window.localStorage })
         const handleChangeFile = jest.fn(() => newBill.handleChangeFile)
@@ -67,7 +70,7 @@ describe("Given I am connected as an employee", () => {
           }
         })
         expect(handleChangeFile).toBeCalled()
-        expect(global.alert).toHaveBeenCalledTimes(1);
+        expect(window.alert).toHaveBeenCalledTimes(1);
       })
     })
   })
