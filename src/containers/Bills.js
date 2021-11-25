@@ -53,6 +53,7 @@ export default class {
               // log the error and return unformatted date in that case
               return {
                 ...doc.data(),
+                dateInitial : doc.data().date,
                 date: doc.data().date,
                 status: formatStatus(doc.data().status),
                 amount: formatAmount(doc.data().amount)
