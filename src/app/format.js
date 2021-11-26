@@ -1,4 +1,6 @@
 export const formatDate = (dateStr) => {
+  /* const regEx = /^\d{4}-\d{2}-\d{2}$/;
+  if ((dateStr) === NaN || dateStr === "" ||     !dateStr.match(regEx)) return "Date non valide"  */
   const date = new Date(dateStr)
   const ye = new Intl.DateTimeFormat('fr', { year: 'numeric' }).format(date)
   const mo = new Intl.DateTimeFormat('fr', { month: 'short' }).format(date)
@@ -15,5 +17,13 @@ export const formatStatus = (status) => {
       return "Accepté"
     case "refused":
       return "Refused"
+  }
+}
+
+export const formatAmount = (amount) => {
+  if (amount == null || amount == "" || amount === NaN || amount === "NaN" || amount < 0) {
+    return "-"
+  } else {
+    return amount
   }
 }

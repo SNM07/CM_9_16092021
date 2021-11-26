@@ -6,6 +6,7 @@ import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
 
 export const filteredBills = (data, status) => {
+  /* istanbul ignore next */
   return (data && data.length) ?
     data.filter(bill => {
 
@@ -146,7 +147,9 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      if(bill.status === getStatus(this.index)) {
+        $(`#open-bill${bill.id}`).on('click',(e) => this.handleEditTicket(e, bill, bills))
+      }
     })
 
     return bills
@@ -154,6 +157,7 @@ export default class {
   }
 
   // not need to cover this function by tests
+      /* istanbul ignore next */
   getBillsAllUsers = () => {
     if (this.firestore) {
       return this.firestore
@@ -174,6 +178,7 @@ export default class {
   }
     
   // not need to cover this function by tests
+      /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.firestore) {
     return this.firestore
